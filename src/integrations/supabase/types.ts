@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.18"
   }
   public: {
     Tables: {
@@ -18,7 +18,7 @@ export type Database = {
         Row: {
           code: string
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           id: string
           is_active: boolean
           is_group: boolean
@@ -31,7 +31,7 @@ export type Database = {
         Insert: {
           code: string
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           is_active?: boolean
           is_group?: boolean
@@ -44,7 +44,7 @@ export type Database = {
         Update: {
           code?: string
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           is_active?: boolean
           is_group?: boolean
@@ -113,7 +113,7 @@ export type Database = {
           account_no: string | null
           branch: string | null
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           id: string
           name: string
           tenant_id: string
@@ -123,7 +123,7 @@ export type Database = {
           account_no?: string | null
           branch?: string | null
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           name: string
           tenant_id: string
@@ -133,7 +133,7 @@ export type Database = {
           account_no?: string | null
           branch?: string | null
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           name?: string
           tenant_id?: string
@@ -209,7 +209,7 @@ export type Database = {
           bank_id: string | null
           cheque_no: string
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           direction: string
           due_date: string
           id: string
@@ -224,7 +224,7 @@ export type Database = {
           bank_id?: string | null
           cheque_no: string
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           direction?: string
           due_date?: string
           id?: string
@@ -239,7 +239,7 @@ export type Database = {
           bank_id?: string | null
           cheque_no?: string
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           direction?: string
           due_date?: string
           id?: string
@@ -366,7 +366,7 @@ export type Database = {
           amount: number
           created_at: string
           created_by: string | null
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           doc_date: string
           doc_no: number | null
           doc_type: string
@@ -387,7 +387,7 @@ export type Database = {
           amount?: number
           created_at?: string
           created_by?: string | null
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           doc_date?: string
           doc_no?: number | null
           doc_type: string
@@ -408,7 +408,7 @@ export type Database = {
           amount?: number
           created_at?: string
           created_by?: string | null
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           doc_date?: string
           doc_no?: number | null
           doc_type?: string
@@ -485,21 +485,21 @@ export type Database = {
       }
       exchange_rates: {
         Row: {
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           id: string
           rate_date: string
           rate_to_usd: number
           tenant_id: string
         }
         Insert: {
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           rate_date?: string
           rate_to_usd: number
           tenant_id: string
         }
         Update: {
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           rate_date?: string
           rate_to_usd?: number
@@ -521,7 +521,7 @@ export type Database = {
           code: string | null
           cost: number
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           id: string
           name: string
           notes: string | null
@@ -535,7 +535,7 @@ export type Database = {
           code?: string | null
           cost: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           name: string
           notes?: string | null
@@ -549,7 +549,7 @@ export type Database = {
           code?: string | null
           cost?: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           id?: string
           name?: string
           notes?: string | null
@@ -582,7 +582,7 @@ export type Database = {
           audited_by: string | null
           created_at: string
           created_by: string | null
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           description: string | null
           doc_type: string
           document_id: string | null
@@ -598,7 +598,7 @@ export type Database = {
           audited_by?: string | null
           created_at?: string
           created_by?: string | null
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           description?: string | null
           doc_type?: string
           document_id?: string | null
@@ -614,7 +614,7 @@ export type Database = {
           audited_by?: string | null
           created_at?: string
           created_by?: string | null
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           description?: string | null
           doc_type?: string
           document_id?: string | null
@@ -626,7 +626,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "journal_entries_document_id_fkey"
+            foreignKeyName: "je_document_fk"
             columns: ["document_id"]
             isOneToOne: false
             referencedRelation: "documents"
@@ -808,7 +808,7 @@ export type Database = {
           barcode: string | null
           category: string | null
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           default_warehouse_id: string | null
           id: string
           is_active: boolean
@@ -825,7 +825,7 @@ export type Database = {
           barcode?: string | null
           category?: string | null
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           default_warehouse_id?: string | null
           id?: string
           is_active?: boolean
@@ -842,7 +842,7 @@ export type Database = {
           barcode?: string | null
           category?: string | null
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           default_warehouse_id?: string | null
           id?: string
           is_active?: boolean
@@ -923,7 +923,7 @@ export type Database = {
           account_id: string | null
           amount: number
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           description: string
           expense_date: string
           id: string
@@ -934,7 +934,7 @@ export type Database = {
           account_id?: string | null
           amount: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           description: string
           expense_date?: string
           id?: string
@@ -945,7 +945,7 @@ export type Database = {
           account_id?: string | null
           amount?: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           description?: string
           expense_date?: string
           id?: string
@@ -1034,7 +1034,7 @@ export type Database = {
           completion_pct: number
           contract_value: number
           created_at: string
-          currency: Database["public"]["Enums"]["currency_code"]
+          currency: string
           end_date: string | null
           id: string
           is_active: boolean
@@ -1050,7 +1050,7 @@ export type Database = {
           completion_pct?: number
           contract_value?: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           end_date?: string | null
           id?: string
           is_active?: boolean
@@ -1066,7 +1066,7 @@ export type Database = {
           completion_pct?: number
           contract_value?: number
           created_at?: string
-          currency?: Database["public"]["Enums"]["currency_code"]
+          currency?: string
           end_date?: string | null
           id?: string
           is_active?: boolean
@@ -1294,66 +1294,88 @@ export type Database = {
       }
       tenant_settings: {
         Row: {
+          advances_account_id: string | null
+          auto_backup: boolean
           cash_account_id: string | null
           closed_until: string | null
           cogs_account_id: string | null
+          cost_method: string
           customers_account_id: string | null
           fiscal_end: string | null
           fiscal_start: string | null
           fx_account_id: string | null
           inventory_account_id: string | null
+          inventory_adjust_account_id: string | null
           logo_url: string | null
           onboarding_done: boolean
           period_type: string
           primary_color: string | null
           project_cost_account_id: string | null
           retained_earnings_account_id: string | null
+          salaries_account_id: string | null
           sales_account_id: string | null
           suppliers_account_id: string | null
           tenant_id: string
           updated_at: string
         }
         Insert: {
+          advances_account_id?: string | null
+          auto_backup?: boolean
           cash_account_id?: string | null
           closed_until?: string | null
           cogs_account_id?: string | null
+          cost_method?: string
           customers_account_id?: string | null
           fiscal_end?: string | null
           fiscal_start?: string | null
           fx_account_id?: string | null
           inventory_account_id?: string | null
+          inventory_adjust_account_id?: string | null
           logo_url?: string | null
           onboarding_done?: boolean
           period_type?: string
           primary_color?: string | null
           project_cost_account_id?: string | null
           retained_earnings_account_id?: string | null
+          salaries_account_id?: string | null
           sales_account_id?: string | null
           suppliers_account_id?: string | null
           tenant_id: string
           updated_at?: string
         }
         Update: {
+          advances_account_id?: string | null
+          auto_backup?: boolean
           cash_account_id?: string | null
           closed_until?: string | null
           cogs_account_id?: string | null
+          cost_method?: string
           customers_account_id?: string | null
           fiscal_end?: string | null
           fiscal_start?: string | null
           fx_account_id?: string | null
           inventory_account_id?: string | null
+          inventory_adjust_account_id?: string | null
           logo_url?: string | null
           onboarding_done?: boolean
           period_type?: string
           primary_color?: string | null
           project_cost_account_id?: string | null
           retained_earnings_account_id?: string | null
+          salaries_account_id?: string | null
           sales_account_id?: string | null
           suppliers_account_id?: string | null
           tenant_id?: string
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "tenant_settings_advances_account_id_fkey"
+            columns: ["advances_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "tenant_settings_cash_account_id_fkey"
             columns: ["cash_account_id"]
@@ -1390,6 +1412,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "tenant_settings_inventory_adjust_account_id_fkey"
+            columns: ["inventory_adjust_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "tenant_settings_project_cost_account_id_fkey"
             columns: ["project_cost_account_id"]
             isOneToOne: false
@@ -1399,6 +1428,13 @@ export type Database = {
           {
             foreignKeyName: "tenant_settings_retained_earnings_account_id_fkey"
             columns: ["retained_earnings_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tenant_settings_salaries_account_id_fkey"
+            columns: ["salaries_account_id"]
             isOneToOne: false
             referencedRelation: "accounts"
             referencedColumns: ["id"]
@@ -1565,12 +1601,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      add_currency: {
-        Args: { _code: string; _name: string; _symbol: string }
-        Returns: undefined
-      }
       claim_super_admin: { Args: never; Returns: boolean }
-      close_fiscal_year: { Args: never; Returns: string }
       current_tenant_id: { Args: never; Returns: string }
       has_perm: {
         Args: {
@@ -1579,34 +1610,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_auditor: { Args: never; Returns: boolean }
       is_auditor_or_admin: { Args: never; Returns: boolean }
       is_super_admin: { Args: never; Returns: boolean }
-      mark_notifications_seen: { Args: never; Returns: undefined }
-      post_document: { Args: { _id: string }; Returns: string }
-      purge_tenant: { Args: { _id: string }; Returns: undefined }
-      reopen_fiscal_period: { Args: never; Returns: undefined }
-      restore_tenant: { Args: { _data: Json; _id: string }; Returns: undefined }
-      set_entry_audited: {
-        Args: { _id: string; _ok: boolean }
-        Returns: undefined
-      }
+      is_tenant_admin: { Args: never; Returns: boolean }
+      my_tenant_id: { Args: never; Returns: string }
       tenant_active: { Args: never; Returns: boolean }
-      unpost_document: { Args: { _id: string }; Returns: undefined }
-      update_company_info: {
-        Args: {
-          _address: string
-          _code: string
-          _name: string
-          _notes: string
-          _phone: string
-        }
-        Returns: undefined
-      }
     }
     Enums: {
       account_nature: "closing" | "balance_sheet" | "profit_loss"
-      account_nature_old: "debit" | "credit"
-      currency_code: "USD" | "SYP"
       perm_action: "view" | "create" | "edit" | "delete"
     }
     CompositeTypes: {
@@ -1736,8 +1748,6 @@ export const Constants = {
   public: {
     Enums: {
       account_nature: ["closing", "balance_sheet", "profit_loss"],
-      account_nature_old: ["debit", "credit"],
-      currency_code: ["USD", "SYP"],
       perm_action: ["view", "create", "edit", "delete"],
     },
   },
