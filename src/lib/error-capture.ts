@@ -54,6 +54,8 @@ function isErrorLike(value: unknown): value is Error {
 // recorded for consumeLastCapturedError and expanded before serialization.
 const originalConsoleError = console.error.bind(console);
 console.error = (...args: unknown[]) => {
+  // Client-aborted requests (user navigated away) are noise, not failures.
+  if (args.some((a) => a instanceof Error && a.message === "aborted")) return;
   const expanded = args.map((arg) => {
     if (!isErrorLike(arg)) return arg;
     record(arg);
