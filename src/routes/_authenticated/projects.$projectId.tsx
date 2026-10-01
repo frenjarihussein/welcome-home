@@ -66,7 +66,7 @@ function ProjectDetail() {
   const glLines = useQuery({
     queryKey: ["project_gl", projectId],
     queryFn: async () =>
-      (await scope(db.from("journal_lines").select("debit, credit, journal_entries(exchange_rate)"), me?.tenantId).eq("project_id", projectId)).data ?? [],
+      (await scope(db.from("journal_lines").select(`debit, credit, ${me?.isAuditor ? "journal_entries!inner" : "journal_entries"}(exchange_rate,audited)`), me?.tenantId).eq("project_id", projectId).eq(me?.isAuditor ? "journal_entries.audited" : "project_id", me?.isAuditor ? true : projectId)).data ?? [],
   });
   const milestones = useQuery({
     queryKey: ["milestones", projectId],

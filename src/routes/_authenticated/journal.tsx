@@ -88,7 +88,7 @@ function JournalPage() {
   const [filters, setFilters] = useDataFilters();
   const brand = useBranding();
   const [auditFilter, setAuditFilter] = useState<"all" | "yes" | "no">("all");
-  const canAudit = !!(me?.isAuditor || me?.isTenantAdmin);
+  const canAudit = !!me?.isAuditor;
   async function toggleAudit(id: string, ok: boolean) {
     const { error } = await db.rpc("set_entry_audited", { _id: id, _ok: ok });
     if (error) toast.error(error.message);

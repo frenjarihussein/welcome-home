@@ -366,7 +366,8 @@ function useJournalLines(args: { partnerId?: string | undefined; accountId?: str
     queryFn: async () => {
       let q = db
         .from("journal_lines")
-        .select("*, journal_entries(entry_no,entry_date,description,exchange_rate), accounts(code,name), partners(name)");
+        .select(`*, ${me?.isAuditor ? "journal_entries!inner" : "journal_entries"}(entry_no,entry_date,description,exchange_rate,audited), accounts(code,name), partners(name)`);
+      if (me?.isAuditor) q = q.eq("journal_entries.audited", true);
       if (me?.tenantId) q = q.eq("tenant_id", me.tenantId);
       if (args.partnerId) q = q.eq("partner_id", args.partnerId);
       if (args.accountId) q = q.eq("account_id", args.accountId);
