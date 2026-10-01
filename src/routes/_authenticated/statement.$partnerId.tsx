@@ -24,9 +24,9 @@ function StatementPage() {
       const { data, error } = await scope(
         db
           .from("journal_lines")
-          .select("*, journal_entries(entry_no, entry_date, description, currency, exchange_rate), accounts(code,name)"),
+          .select(`*, ${me?.isAuditor ? "journal_entries!inner" : "journal_entries"}(entry_no, entry_date, description, currency, exchange_rate, audited), accounts(code,name)`),
         me?.tenantId,
-      ).eq("partner_id", partnerId);
+      ).eq("partner_id", partnerId).eq(me?.isAuditor ? "journal_entries.audited" : "partner_id", me?.isAuditor ? true : partnerId);
       if (error) throw error;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (data ?? []).sort((a: any, b: any) =>

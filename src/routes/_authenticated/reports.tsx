@@ -19,12 +19,13 @@ type Row = { code: string; name: string; nature: string; debit: number; credit: 
 function useLedger(from: string, to: string) {
   const { data: me } = useMe();
   return useQuery({
-    queryKey: ["ledger", me?.tenantId, from, to],
+    queryKey: ["ledger", me?.tenantId, me?.isAuditor, from, to],
     enabled: !!me,
     queryFn: async (): Promise<Row[]> => {
       let q = db
         .from("journal_lines")
-        .select("debit, credit, accounts(code,name,nature), journal_entries(entry_date,exchange_rate)");
+        .select(`debit, credit, accounts(code,name,nature), ${me?.isAuditor ? "journal_entries!inner" : "journal_entries"}(entry_date,exchange_rate,audited)`);
+      if (me?.isAuditor) q = q.eq("journal_entries.audited", true);
       if (me?.tenantId) q = q.eq("tenant_id", me.tenantId);
       const { data, error } = await q;
       if (error) throw error;
