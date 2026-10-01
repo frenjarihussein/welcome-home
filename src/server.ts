@@ -51,6 +51,10 @@ export default {
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
+      // Client closed the connection mid-request (navigation, tab close) — not an app failure.
+      if (request.signal?.aborted || (error instanceof Error && error.message === "aborted")) {
+        return new Response(null, { status: 499 });
+      }
       console.error(error);
       return new Response(renderErrorPage(), {
         status: 500,
