@@ -1601,7 +1601,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_currency: {
+        Args: { _code: string; _name: string; _symbol: string }
+        Returns: undefined
+      }
       claim_super_admin: { Args: never; Returns: boolean }
+      clear_tenant_data: { Args: { _id: string }; Returns: undefined }
+      close_fiscal_year: { Args: never; Returns: undefined }
       current_tenant_id: { Args: never; Returns: string }
       has_perm: {
         Args: {
@@ -1614,8 +1620,28 @@ export type Database = {
       is_auditor_or_admin: { Args: never; Returns: boolean }
       is_super_admin: { Args: never; Returns: boolean }
       is_tenant_admin: { Args: never; Returns: boolean }
+      mark_notifications_seen: { Args: never; Returns: undefined }
       my_tenant_id: { Args: never; Returns: string }
+      post_document: { Args: { _id: string }; Returns: string }
+      purge_tenant: { Args: { _id: string }; Returns: undefined }
+      reopen_fiscal_period: { Args: never; Returns: undefined }
+      restore_tenant: { Args: { _data: Json; _id: string }; Returns: undefined }
+      set_entry_audited: {
+        Args: { _id: string; _ok: boolean }
+        Returns: undefined
+      }
       tenant_active: { Args: never; Returns: boolean }
+      unpost_document: { Args: { _id: string }; Returns: undefined }
+      update_company_info: {
+        Args: {
+          _address: string
+          _code: string
+          _name: string
+          _notes: string
+          _phone: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       account_nature: "closing" | "balance_sheet" | "profit_loss"
