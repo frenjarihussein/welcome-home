@@ -1,1 +1,0 @@
-DROP TYPE IF EXISTS public.perm_action CASCADE; DROP TYPE IF EXISTS public.currency_code CASCADE; DROP TYPE IF EXISTS public.account_nature CASCADE;
